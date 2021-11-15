@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const port = 7000;
+const cors = require("cors");
 
 const { sendTheData } = require("./repo");
 
@@ -32,10 +33,11 @@ function logger(req, res, next) {
 }
 
 app.use(logger);
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.end(JSON.stringify({ msg: "success" }));
+  res.end(JSON.stringify({ msg: "Hello From Server" }));
 });
 
 app.get("/listCompanies", async function (req, res) {
