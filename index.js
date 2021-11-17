@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/listCompanies", async function (req, res) {
-  const data = await mongoose.connection.db.collection("companies").find({}).limit(5).toArray()
+  const data = await mongoose.connection.db.collection("companies").find({}).limit(20).toArray()
   console.log({ data });
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.end(JSON.stringify({ data }));
