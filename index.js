@@ -41,8 +41,36 @@ app.get("/", (req, res) => {
 });
 
 app.get("/listCompanies", async function (req, res) {
-  const data = await mongoose.connection.db.collection("companies").find({}).limit(5).toArray()
+  const data = await mongoose.connection.db
+    .collection("companies")
+    .find({})
+    .limit(50)
+    .toArray();
   console.log({ data });
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.end(JSON.stringify({ data }));
+});
+app.get("/listCompaniesFast", async function (req, res) {
+  const data = await mongoose.connection.db
+    .collection("companies")
+    .find(
+      { number_of_employees: { $gt: 5 } },
+      {
+        name: 1,
+        number_of_employees: 1,
+        founded_year: 1,
+        email_address: 1,
+        phone_number: 1,
+        overview: 1,
+        products: 1,
+        description: 1,
+        category_code: 1,
+        founded_monthL: 1,
+      }
+    )
+    .limit(50)
+    .toArray();
+  // console.log({ data });
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.end(JSON.stringify({ data }));
 });
